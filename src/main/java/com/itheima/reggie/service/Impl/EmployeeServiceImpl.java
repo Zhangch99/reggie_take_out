@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  * @date 2023/7/24 18:14
  */
 @Service
-public class EmployeeImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
+public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 }

@@ -33,4 +33,10 @@ public class GlobalExceptionHandler {
         }
         return R.error("失败了！！！");
     }
+
+    @ExceptionHandler(CustomException.class)
+    public R<String> exceptionHandler(CustomException ex){
+        log.error("错误提示信息为：{}", ex.getMessage());
+        return R.error(ex.getMessage());
+    }
 }

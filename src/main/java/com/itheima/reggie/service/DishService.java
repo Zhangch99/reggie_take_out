@@ -1,12 +1,12 @@
 package com.itheima.reggie.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itheima.reggie.entity.Employee;
+import com.itheima.reggie.entity.Dish;
 
 /**
  * @author zhangch
  * @Description
- * @date 2023/7/24 18:11
+ * @date 2023/7/25 22:51
  */
-public interface EmployeeService extends IService<Employee> {
+public interface DishService extends IService<Dish> {
 }

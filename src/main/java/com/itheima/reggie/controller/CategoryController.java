@@ -1,14 +1,13 @@
 package com.itheima.reggie.controller;
 
-import ch.qos.logback.classic.spi.EventArgUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.R;
-import com.itheima.reggie.service.EmployeeService;
+import com.itheima.reggie.entity.Category;
+import com.itheima.reggie.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zhangch
@@ -17,15 +16,52 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-@RequestMapping("category/")
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    EmployeeService employeeService;
+    private CategoryService categoryService;
 
+    /**Ø
+     * 新增分类数据
+     * @param category
+     * @return
+     */
+    @PostMapping
+    public R<String> save(@RequestBody Category category){
+        log.info("新增分类数据");
+        categoryService.save(category);
+        return R.success("新增分类成功");
+    }
+
+    @GetMapping("/page")
     public R<Page> page(int page, int pageSize){
-        IPage<Object> objectIPage = new Page();
+        Page page1 = new Page(page, pageSize);
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        categoryLambdaQueryWrapper.orderByAsc(Category::getSort);
+        categoryService.page(page1, categoryLambdaQueryWrapper);
+        return R.success(page1);
+    }
 
-        return null;
+    /**
+     * 根据id来删除数据
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public R<String> delete(Long ids){
+        categoryService.remove(ids);
+        return R.success("数据删除成功");
+    }
+
+    /**
+     * 修改分类
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public R<String> update(@RequestBody Category category){
+        categoryService.updateById(category);
+        return R.success("修改成功");
     }
 
 }
